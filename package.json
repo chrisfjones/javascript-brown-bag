@@ -1,0 +1,12 @@
+{
+    "name": "javascript-brown-bag",
+    "description": "A multi-part brown bag on recent advancements in js",
+    "tags": ["presentations", "deck.js"],
+    "author": "Chris Jones <chris.f.jones@gmail.com>",
+    "version": "0.0.1",
+    "main": "index",
+    "engines": { "node": "0.4.9" },
+    "dependencies": {
+        "deckem": "0.0.3"
+    }
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+mkdir public
+deckem build -p public
