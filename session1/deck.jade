@@ -16,7 +16,9 @@ section.slide
           ctor.prototype = parent.prototype; child.prototype = new ctor; 
           child.__super__ = parent.prototype;
           return child; })(MyArray,Array);
-
+section.slide
+  h2 EcmaScript 
+  img(src='ecma-cloud.png')
 section.slide
   h2 CommonJS
   ul
@@ -31,7 +33,6 @@ section.slide
         li async/promises
         li ...
     li.slide Has achieved critical mass where most js tools implement at least the module system if not more
-    
 section.slide
   h2 Modern js engines
   ul
@@ -40,7 +41,6 @@ section.slide
     li rhino (mozilla's embeddable engine)
     li nitro (safari)
   img.slide(src='sunspider.png')
-
 section.slide
   h2 Companies with a vested interest in making javascript better and faster
   ul.slide
@@ -50,18 +50,14 @@ section.slide
     li Yahoo
     li Mozilla
     li Exxon/Mobil
-
 section.slide
   h1 Actually never mind, javascript still sucks.
-
 section.slide
   h1 We should use coffeescript instead.
      .slide ^_^
-
 section.slide
   h2 Elevator speech
   blockquote.slide CoffeeScript is a little language that compiles into JavaScript.
-
 section.slide
   h2 How coffeescript is better than javascript
   ul
@@ -80,7 +76,6 @@ section.slide
             }, this);
           }
         }).call(this);
-
 section.slide
   h2 How coffeescript is better than javascript
   ul
@@ -143,7 +138,7 @@ section.slide
       a(href='http://jashkenas.github.com/coffee-script/') http://jashkenas.github.com/coffee-script/
 
 section.slide
-  h2 How coffeescript is better than javascript
+  h2 Contrived example anyone?
   textarea.code(mode='javascript',runnable='false')
     class Food
       constructor: (@name) ->
@@ -162,15 +157,15 @@ section.slide
 
     bowl =
       color: 'blue'
-      fruit: [
+      contents: [
         new Fruit 'apple'
         new Fruit 'banana'
         new Junk  'donut'
         new Food  'brains']
-    eat food for food in bowl.fruit
+    eat food for food in bowl.contents
 
 section.slide
-  h2 How coffeescript is better than javascript
+  h2 Contrived example anyone?
   textarea.code(mode='javascript',runnable='true')
     (function() {
       var Food, Fruit, Junk, bowl, eat, food, _i, _len, _ref;
@@ -210,3 +205,4 @@ section.slide
       _ref = bowl.fruit;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) { food = _ref[_i]; eat(food); }
     }).call(this);
+
