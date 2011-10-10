@@ -1,0 +1,212 @@
+
+
+section.slide
+  h1 Javascript Brown Bag Session 1
+
+section.slide
+  h2 A brief history of javascript:
+  ul
+    li.slide The old days:
+      img(src='Netscape1.jpg')
+    li.slide And fun syntax:
+      textarea.code(mode='javascript',runnable='true')
+        (function(child, parent) {
+          for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+          function ctor() { this.constructor = child; }
+          ctor.prototype = parent.prototype; child.prototype = new ctor; 
+          child.__super__ = parent.prototype;
+          return child; })(MyArray,Array);
+
+section.slide
+  h2 CommonJS
+  ul
+    li.slide Like the JCP for javascript
+    li.slide Formalizes standards to progress javascript towards a platform
+    li.slide Specifications for:
+      ul
+        li binary handling (datatypes, streams, etc)
+        li filesystem apis
+        li module/package system
+        li unit testing
+        li async/promises
+        li ...
+    li.slide Has achieved critical mass where most js tools implement at least the module system if not more
+    
+section.slide
+  h2 Modern js engines
+  ul
+    li v8 (chrome)
+    li spidermonkey (firefox)
+    li rhino (mozilla's embeddable engine)
+    li nitro (safari)
+  img.slide(src='sunspider.png')
+
+section.slide
+  h2 Companies with a vested interest in making javascript better and faster
+  ul.slide
+    li Google
+    li Apple
+    li Microsoft
+    li Yahoo
+    li Mozilla
+    li Exxon/Mobil
+
+section.slide
+  h1 Actually never mind, javascript still sucks.
+
+section.slide
+  h1 We should use coffeescript instead.
+     .slide ^_^
+
+section.slide
+  h2 Elevator speech
+  blockquote.slide CoffeeScript is a little language that compiles into JavaScript.
+
+section.slide
+  h2 How coffeescript is better than javascript
+  ul
+    li.slide Less noise
+      textarea.code(mode='coffeescript',runnable='true')
+        for i in [1..10]
+          @funcs.push = (param) => i + param
+    li.slide vs
+      textarea.code(mode='javascript',runnable='true')
+        (function() {
+          var i;
+          var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+          for (i = 1; i <= 10; i++) {
+            this.funcs.push = __bind(function(param) {
+              return i + param;
+            }, this);
+          }
+        }).call(this);
+
+section.slide
+  h2 How coffeescript is better than javascript
+  ul
+    li.slide Looping and Comprehensions
+      textarea.code
+        customers =
+          a: 'a@b.com'
+          b: 'b@c.com'
+          c: 'c@d.com'
+        for id, email of customers
+          console.log "\#{id}=\#{email}"
+
+        evens = (x for x in [0..10] by 2)
+    li.slide vs
+      textarea.code
+        (function() {
+          var customers, email, evens, id, x;
+          customers = {
+            a: 'a@b.com',
+            b: 'b@c.com',
+            c: 'c@d.com'
+          };
+          for (id in customers) {
+            email = customers[id];
+            console.log("\#{id}=\#{email}");
+          }
+          evens = (function() {
+            var _results;
+            _results = [];
+            for (x = 0; x <= 10; x += 2) {
+              _results.push(x);
+            }
+            return _results;
+          })();
+        }).call(this);
+section.slide
+  h2 How coffeescript is better than javascript
+  ul
+    li.slide Englishification
+      textarea.code
+        volume = 10 if band isnt spinalTap and amp.working is yes
+    li.slide Classes with inheritance and polymorphism!
+      textarea.code
+        class Animal
+          constructor: (@species, @genus) ->
+            initStuff()
+          barks: => false
+
+        class Dog extends Animal
+          barks: => true
+    li.slide Existentialism
+      textarea.code
+        zip ?= lottery?.drawWinner?().address?.zipcode
+    li.slide Clean strings
+      textarea.code
+        console.log "This is a multiline string
+          with a \#{variable} substitution in it,
+          badass eh?"
+    li.slide And a bunch more cool stuff, see 
+      a(href='http://jashkenas.github.com/coffee-script/') http://jashkenas.github.com/coffee-script/
+
+section.slide
+  h2 How coffeescript is better than javascript
+  textarea.code(mode='javascript',runnable='false')
+    class Food
+      constructor: (@name) ->
+      taste: => '?'
+
+    class Fruit extends Food
+      taste: => 'good'
+
+    class Junk extends Food
+      taste: => 'bad'
+
+    eat = (food) =>
+      console.log "tasting \#{food.name}"
+      console.log '-chomp' if food.taste() isnt 'bad'
+      console.log '-blech' if food.taste() isnt 'good'
+
+    bowl =
+      color: 'blue'
+      fruit: [
+        new Fruit 'apple'
+        new Fruit 'banana'
+        new Junk  'donut'
+        new Food  'brains']
+    eat food for food in bowl.fruit
+
+section.slide
+  h2 How coffeescript is better than javascript
+  textarea.code(mode='javascript',runnable='true')
+    (function() {
+      var Food, Fruit, Junk, bowl, eat, food, _i, _len, _ref;
+      var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+        for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+        function ctor() { this.constructor = child; }
+        ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype;
+        return child;
+      };
+      Food = (function() {
+        function Food(name) { this.name = name; this.taste = __bind(this.taste, this); }
+        Food.prototype.taste = function() { return '?'; };
+        return Food;
+      })();
+      Fruit = (function() {
+        __extends(Fruit, Food);
+        function Fruit() {
+          this.taste = __bind(this.taste, this);
+          Fruit.__super__.constructor.apply(this, arguments); }
+        Fruit.prototype.taste = function() { return 'good'; };
+        return Fruit;
+      })();
+      Junk = (function() {
+        __extends(Junk, Food);
+        function Junk() {
+          this.taste = __bind(this.taste, this);
+          Junk.__super__.constructor.apply(this, arguments); }
+        Junk.prototype.taste = function() { return 'bad'; };
+        return Junk;
+      })();
+      eat = __bind(function(food) {
+        console.log("tasting " + food.name);
+        if (food.taste() !== 'bad') { console.log('-chomp'); }
+        if (food.taste() !== 'good') { return console.log('-blech'); }
+      }, this);
+      bowl = { color: 'blue', fruit: [new Fruit('apple'), new Fruit('banana'), new Junk('donut'), new Food('brains')] };
+      _ref = bowl.fruit;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) { food = _ref[_i]; eat(food); }
+    }).call(this);
