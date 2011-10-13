@@ -1,8 +1,5 @@
-
-
 section.slide
   h1 Javascript Brown Bag Session 1
-
 section.slide
   h2 A brief history of javascript:
   ul
@@ -18,7 +15,7 @@ section.slide
           return child; })(MyArray,Array);
 section.slide
   h2 EcmaScript 
-  img(src='ecma-cloud.png')
+  img.slide(src='ecma-cloud.png')
 section.slide
   h2 CommonJS
   ul
@@ -50,6 +47,16 @@ section.slide
     li Yahoo
     li Mozilla
     li Exxon/Mobil
+section.slide
+  h2 NodeJS
+    blockquote.slide NodeJS is evented IO for javascript
+    blockquote.slide Everything in node is asynchronous except for your code
+    ul.slide node:
+      li.slide runs on an single-threaded event loop much like in the browser
+      li.slide is built on v8 with native bindings
+      li.slide supports CommonJS modules, and native extensions
+      li.slide has core support for everything from http to file handling to unit testing
+      li.slide has many great 3rd party packages (modules) and a nice system for managing them
 section.slide
   h1 Actually never mind, javascript still sucks.
 section.slide
@@ -139,18 +146,18 @@ section.slide
 
 section.slide
   h2 Contrived example anyone?
-  textarea.code(mode='javascript',runnable='false')
-    class Food
+  textarea.code
+    exports.Food = class Food
       constructor: (@name) ->
       taste: => '?'
 
-    class Fruit extends Food
+    exports.Fruit = class Fruit extends Food
       taste: => 'good'
 
-    class Junk extends Food
+    exports.Junk = class Junk extends Food
       taste: => 'bad'
 
-    eat = (food) =>
+    exports.eat = (food) =>
       console.log "tasting \#{food.name}"
       console.log '-chomp' if food.taste() isnt 'bad'
       console.log '-blech' if food.taste() isnt 'good'
@@ -165,44 +172,32 @@ section.slide
     eat food for food in bowl.contents
 
 section.slide
-  h2 Contrived example anyone?
-  textarea.code(mode='javascript',runnable='true')
-    (function() {
-      var Food, Fruit, Junk, bowl, eat, food, _i, _len, _ref;
-      var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-        for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-        function ctor() { this.constructor = child; }
-        ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype;
-        return child;
-      };
-      Food = (function() {
-        function Food(name) { this.name = name; this.taste = __bind(this.taste, this); }
-        Food.prototype.taste = function() { return '?'; };
-        return Food;
-      })();
-      Fruit = (function() {
-        __extends(Fruit, Food);
-        function Fruit() {
-          this.taste = __bind(this.taste, this);
-          Fruit.__super__.constructor.apply(this, arguments); }
-        Fruit.prototype.taste = function() { return 'good'; };
-        return Fruit;
-      })();
-      Junk = (function() {
-        __extends(Junk, Food);
-        function Junk() {
-          this.taste = __bind(this.taste, this);
-          Junk.__super__.constructor.apply(this, arguments); }
-        Junk.prototype.taste = function() { return 'bad'; };
-        return Junk;
-      })();
-      eat = __bind(function(food) {
-        console.log("tasting " + food.name);
-        if (food.taste() !== 'bad') { console.log('-chomp'); }
-        if (food.taste() !== 'good') { return console.log('-blech'); }
-      }, this);
-      bowl = { color: 'blue', fruit: [new Fruit('apple'), new Fruit('banana'), new Junk('donut'), new Food('brains')] };
-      _ref = bowl.fruit;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) { food = _ref[_i]; eat(food); }
-    }).call(this);
+  h2 Contrived unit tests anyone?
+  textarea.code
+    vows                = require 'vows'
+    assert              = require 'assert'
+    {Food, Fruit, Junk} = require './food'
 
+    suite = vows.describe 'Food Test Suite'
+    suite.addBatch
+      'when eating fruit':
+        topic: -> new Fruit 'apple'
+        'it tastes good': (topic) ->
+          assert.equal topic.taste(), 'good'
+      'when eating junk':
+        topic: -> new Junk 'donut'
+        'it tastes bad': (topic) ->
+          assert.equal topic.taste(), 'bad'
+      'when eating brains':
+        topic: -> new Food 'brains'
+        'i have no idea': (topic) ->
+          assert.equal topic.taste(), '?'
+
+    suite.run()
+  ul.slide A quick vows primer
+    li Vows is an asynchronous bdd test framework for node
+    li You start with a *Suite*
+    li Add *Batches* to it (which execute in parallel)
+    li A *Batch* has 1 or many *Contexts*
+    li A *Context* probably has a *Topic* (which is thing you throw asserts at)
+    li A *Context* also has 1 or many *Vows* (which are functions that assert stuff on the topic)
