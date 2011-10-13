@@ -1,0 +1,122 @@
+<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Javascript Brown Bag Session 1</h1></section><section class="slide"><h2>A brief history of javascript:</h2><ul><li class="slide">The old days:<img src="Netscape1.jpg"/></li><li class="slide">And fun syntax:<textarea mode="javascript" runnable="true" class="code">(function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype; child.prototype = new ctor; 
+  child.__super__ = parent.prototype;
+  return child; })(MyArray,Array);
+
+</textarea></li></ul></section><section class="slide"><h2>EcmaScript </h2><img src="ecma-cloud.png" class="slide"/></section><section class="slide"><h2>CommonJS</h2><ul><li class="slide">Like the JCP for javascript</li><li class="slide">Formalizes standards to progress javascript towards a platform</li><li class="slide">Specifications for:<ul><li>binary handling (datatypes, streams, etc)</li><li>filesystem apis</li><li>module/package system</li><li>unit testing</li><li>async/promises</li><li>...</li></ul></li><li class="slide">Has achieved critical mass where most js tools implement at least the module system if not more</li></ul></section><section class="slide"><h2>Modern js engines</h2><ul><li>v8 (chrome)</li><li>spidermonkey (firefox)</li><li>rhino (mozilla's embeddable engine)</li><li>nitro (safari)</li></ul><img src="sunspider.png" class="slide"/></section><section class="slide"><h2>Companies with a vested interest in making javascript better and faster</h2><ul class="slide"><li>Google</li><li>Apple</li><li>Microsoft</li><li>Yahoo</li><li>Mozilla</li><li>Exxon/Mobil</li></ul></section><section class="slide"><h2>NodeJS</h2><blockquote class="slide">NodeJS is evented IO for javascript</blockquote><blockquote class="slide">Everything in node is asynchronous except for your code</blockquote><ul class="slide"><li class="slide">runs on an single-threaded event loop much like in the browser</li><li class="slide">is built on v8 with native bindings</li><li class="slide">supports CommonJS modules, and native extensions</li><li class="slide">has core support for everything from http to file handling to unit testing</li><li class="slide">has many great 3rd party packages (modules) and a nice system for managing them</li></ul></section><section class="slide"><h1>Actually never mind, javascript still sucks.</h1></section><section class="slide"><h1>We should use coffeescript instead.<div class="slide">^_^</div></h1></section><section class="slide"><h2>Elevator speech</h2><blockquote class="slide">CoffeeScript is a little language that compiles into JavaScript.</blockquote></section><section class="slide"><h2>How coffeescript is better than javascript</h2><ul><li class="slide">Less noise<textarea mode="coffeescript" runnable="true" class="code">for i in [1..10]
+  @funcs.push = (param) => i + param
+
+</textarea></li><li class="slide">vs<textarea mode="javascript" runnable="true" class="code">(function() {
+  var i;
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  for (i = 1; i <= 10; i++) {
+    this.funcs.push = __bind(function(param) {
+      return i + param;
+    }, this);
+  }
+}).call(this);
+</textarea></li></ul></section><section class="slide"><h2>How coffeescript is better than javascript</h2><ul><li class="slide">Looping and Comprehensions<textarea class="code">customers =
+  a: 'a@b.com'
+  b: 'b@c.com'
+  c: 'c@d.com'
+for id, email of customers
+  console.log "#{id}=#{email}"
+
+evens = (x for x in [0..10] by 2)
+</textarea></li><li class="slide">vs<textarea class="code">(function() {
+  var customers, email, evens, id, x;
+  customers = {
+    a: 'a@b.com',
+    b: 'b@c.com',
+    c: 'c@d.com'
+  };
+  for (id in customers) {
+    email = customers[id];
+    console.log("#{id}=#{email}");
+  }
+  evens = (function() {
+    var _results;
+    _results = [];
+    for (x = 0; x <= 10; x += 2) {
+      _results.push(x);
+    }
+    return _results;
+  })();
+}).call(this);
+</textarea></li></ul></section><section class="slide"><h2>How coffeescript is better than javascript</h2><ul><li class="slide">Englishification<textarea class="code">volume = 10 if band isnt spinalTap and amp.working is yes
+</textarea></li><li class="slide">Classes with inheritance and polymorphism!<textarea class="code">class Animal
+  constructor: (@species, @genus) ->
+    initStuff()
+  barks: => false
+
+class Dog extends Animal
+  barks: => true
+
+</textarea></li><li class="slide">Existentialism<textarea class="code">zip ?= lottery?.drawWinner?().address?.zipcode
+</textarea></li><li class="slide">Clean strings<textarea class="code">console.log "This is a multiline string
+  with a #{variable} substitution in it,
+  badass eh?"
+
+</textarea></li><li class="slide">And a bunch more cool stuff, see <a href="http://jashkenas.github.com/coffee-script/">http://jashkenas.github.com/coffee-script/</a></li></ul></section><section class="slide"><h2>Contrived example anyone?</h2><textarea class="code">exports.Food = class Food
+  constructor: (@name) ->
+  taste: => '?'
+
+exports.Fruit = class Fruit extends Food
+  taste: => 'good'
+
+exports.Junk = class Junk extends Food
+  taste: => 'bad'
+
+exports.eat = (food) =>
+  console.log "tasting #{food.name}"
+  console.log '-chomp' if food.taste() isnt 'bad'
+  console.log '-blech' if food.taste() isnt 'good'
+
+bowl =
+  color: 'blue'
+  contents: [
+    new Fruit 'apple'
+    new Fruit 'banana'
+    new Junk  'donut'
+    new Food  'brains']
+
+eat food for food in bowl.contents
+
+</textarea></section><section class="slide"><h2>Contrived unit tests anyone?</h2><textarea class="code">vows                = require 'vows'
+assert              = require 'assert'
+{Food, Fruit, Junk} = require './food'
+
+suite = vows.describe 'Food Test Suite'
+suite.addBatch
+  'when eating fruit':
+    topic: -> new Fruit 'apple'
+    'it tastes good': (topic) ->
+      assert.equal topic.taste(), 'good'
+
+  'when eating junk':
+    topic: -> new Junk 'donut'
+    'it tastes bad': (topic) ->
+      assert.equal topic.taste(), 'bad'
+
+  'when eating brains':
+    topic: -> new Food 'brains'
+    'i have no idea': (topic) ->
+      assert.equal topic.taste(), '?'
+
+
+
+suite.run()
+</textarea><ul class="slide">A quick vows primer<li>Vows is an asynchronous bdd test framework for node</li><li>You start with a *Suite*</li><li>Add *Batches* to it (which execute in parallel)</li><li>A *Batch* has 1 or many *Contexts*</li><li>A *Context* probably has a *Topic* (which is thing you throw asserts at)</li><li>A *Context* also has 1 or many *Vows* (which are functions that assert stuff on the topic)</li></ul></section>
+<p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script>/*
+$.deck.defaults.keys = {
+  next: [],
+  previous: []
+};
+*/
+
+$(function() {
+    $.deck('.slide');
+});
+</script></body></html>
