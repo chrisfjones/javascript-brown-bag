@@ -13,3 +13,4 @@ socket.on 'message', (msg) =>
 socket.bind 7001
 
 setInterval send, 1000
+

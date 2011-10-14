@@ -41,22 +41,50 @@ section.slide
 section.slide
   h2 Companies with a vested interest in making javascript better and faster
   ul.slide
-    li Google
+    li Google (except for dart, doh!)
     li Apple
     li Microsoft
     li Yahoo
     li Mozilla
-    li Exxon/Mobil
 section.slide
   h2 NodeJS
-  blockquote.slide NodeJS is evented IO for javascript
-  blockquote.slide Everything in node is asynchronous except for your code
+  blockquote.slide NodeJS is evented IO for V8 javascript
+  blockquote.slide ...in node everything runs in parallel, except your code
   ul
     li.slide runs on an single-threaded event loop much like in the browser
     li.slide is built on v8 with native bindings
     li.slide supports CommonJS modules, and native extensions
     li.slide has core support for everything from http to file handling to unit testing
     li.slide has many great 3rd party packages (modules) and a nice system for managing them
+section.slide
+  h2 A simple NodeJs application
+  textarea.code(mode='javascript',runnable='false')
+    var http  = require('http');
+    var mysql = require('db-mysql');
+
+    var dbconn = new mysql.Database({
+      hostname: 'localhost',
+      user: 'user',
+      password: 'password',
+      database: 'test'
+    });
+
+    var httpserver = http.createServer();
+
+    httpserver.on('request', function(req, res) {
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      dbconn.connect(function() {
+        this.query('SELECT * FROM USERS').
+          execute(function(error, rows, cols) {
+            res.write(rows.length + ' ROWS found');
+            for row in rows {
+              res.write(row + '\\n');
+            }
+            res.end();
+          });
+      });
+    });
+    httpserver.listen(80, "127.0.0.1");
 section.slide
   h1 Actually never mind, javascript still sucks.
 section.slide
@@ -201,3 +229,5 @@ section.slide
     li A *Batch* has 1 or many *Contexts*
     li A *Context* probably has a *Topic* (which is thing you throw asserts at)
     li A *Context* also has 1 or many *Vows* (which are functions that assert stuff on the topic)
+section.slide
+  h1 kthxbai!

@@ -5,7 +5,34 @@
   child.__super__ = parent.prototype;
   return child; })(MyArray,Array);
 
-</textarea></li></ul></section><section class="slide"><h2>EcmaScript </h2><img src="ecma-cloud.png" class="slide"/></section><section class="slide"><h2>CommonJS</h2><ul><li class="slide">Like the JCP for javascript</li><li class="slide">Formalizes standards to progress javascript towards a platform</li><li class="slide">Specifications for:<ul><li>binary handling (datatypes, streams, etc)</li><li>filesystem apis</li><li>module/package system</li><li>unit testing</li><li>async/promises</li><li>...</li></ul></li><li class="slide">Has achieved critical mass where most js tools implement at least the module system if not more</li></ul></section><section class="slide"><h2>Modern js engines</h2><ul><li>v8 (chrome)</li><li>spidermonkey (firefox)</li><li>rhino (mozilla's embeddable engine)</li><li>nitro (safari)</li></ul><img src="sunspider.png" class="slide"/></section><section class="slide"><h2>Companies with a vested interest in making javascript better and faster</h2><ul class="slide"><li>Google</li><li>Apple</li><li>Microsoft</li><li>Yahoo</li><li>Mozilla</li><li>Exxon/Mobil</li></ul></section><section class="slide"><h2>NodeJS</h2><blockquote class="slide">NodeJS is evented IO for javascript</blockquote><blockquote class="slide">Everything in node is asynchronous except for your code</blockquote><ul class="slide"><li class="slide">runs on an single-threaded event loop much like in the browser</li><li class="slide">is built on v8 with native bindings</li><li class="slide">supports CommonJS modules, and native extensions</li><li class="slide">has core support for everything from http to file handling to unit testing</li><li class="slide">has many great 3rd party packages (modules) and a nice system for managing them</li></ul></section><section class="slide"><h1>Actually never mind, javascript still sucks.</h1></section><section class="slide"><h1>We should use coffeescript instead.<div class="slide">^_^</div></h1></section><section class="slide"><h2>Elevator speech</h2><blockquote class="slide">CoffeeScript is a little language that compiles into JavaScript.</blockquote></section><section class="slide"><h2>How coffeescript is better than javascript</h2><ul><li class="slide">Less noise<textarea mode="coffeescript" runnable="true" class="code">for i in [1..10]
+</textarea></li></ul></section><section class="slide"><h2>EcmaScript </h2><img src="ecma-cloud.png" class="slide"/></section><section class="slide"><h2>CommonJS</h2><ul><li class="slide">Like the JCP for javascript</li><li class="slide">Formalizes standards to progress javascript towards a platform</li><li class="slide">Specifications for:<ul><li>binary handling (datatypes, streams, etc)</li><li>filesystem apis</li><li>module/package system</li><li>unit testing</li><li>async/promises</li><li>...</li></ul></li><li class="slide">Has achieved critical mass where most js tools implement at least the module system if not more</li></ul></section><section class="slide"><h2>Modern js engines</h2><ul><li>v8 (chrome)</li><li>spidermonkey (firefox)</li><li>rhino (mozilla's embeddable engine)</li><li>nitro (safari)</li></ul><img src="sunspider.png" class="slide"/></section><section class="slide"><h2>Companies with a vested interest in making javascript better and faster</h2><ul class="slide"><li>Google (except for dart, doh!)</li><li>Apple</li><li>Microsoft</li><li>Yahoo</li><li>Mozilla</li></ul></section><section class="slide"><h2>NodeJS</h2><blockquote class="slide">NodeJS is evented IO for V8 javascript</blockquote><blockquote class="slide">...in node everything runs in parallel, except your code</blockquote><ul><li class="slide">runs on an single-threaded event loop much like in the browser</li><li class="slide">is built on v8 with native bindings</li><li class="slide">supports CommonJS modules, and native extensions</li><li class="slide">has core support for everything from http to file handling to unit testing</li><li class="slide">has many great 3rd party packages (modules) and a nice system for managing them</li></ul></section><section class="slide"><h2>A simple NodeJs application</h2><textarea mode="javascript" runnable="false" class="code">var http  = require('http');
+var mysql = require('db-mysql');
+
+var dbconn = new mysql.Database({
+  hostname: 'localhost',
+  user: 'user',
+  password: 'password',
+  database: 'test'
+});
+
+var httpserver = http.createServer();
+
+httpserver.on('request', function(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  dbconn.connect(function() {
+    this.query('SELECT * FROM USERS').
+      execute(function(error, rows, cols) {
+        res.write(rows.length + ' ROWS found');
+        for row in rows {
+          res.write(row + '\n');
+        }
+        res.end();
+      });
+
+  });
+});
+httpserver.listen(80, "127.0.0.1");
+</textarea></section><section class="slide"><h1>Actually never mind, javascript still sucks.</h1></section><section class="slide"><h1>We should use coffeescript instead.<div class="slide">^_^</div></h1></section><section class="slide"><h2>Elevator speech</h2><blockquote class="slide">CoffeeScript is a little language that compiles into JavaScript.</blockquote></section><section class="slide"><h2>How coffeescript is better than javascript</h2><ul><li class="slide">Less noise<textarea mode="coffeescript" runnable="true" class="code">for i in [1..10]
   @funcs.push = (param) => i + param
 
 </textarea></li><li class="slide">vs<textarea mode="javascript" runnable="true" class="code">(function() {
@@ -108,7 +135,7 @@ suite.addBatch
 
 
 suite.run()
-</textarea><ul class="slide">A quick vows primer<li>Vows is an asynchronous bdd test framework for node</li><li>You start with a *Suite*</li><li>Add *Batches* to it (which execute in parallel)</li><li>A *Batch* has 1 or many *Contexts*</li><li>A *Context* probably has a *Topic* (which is thing you throw asserts at)</li><li>A *Context* also has 1 or many *Vows* (which are functions that assert stuff on the topic)</li></ul></section>
+</textarea><ul class="slide">A quick vows primer<li>Vows is an asynchronous bdd test framework for node</li><li>You start with a *Suite*</li><li>Add *Batches* to it (which execute in parallel)</li><li>A *Batch* has 1 or many *Contexts*</li><li>A *Context* probably has a *Topic* (which is thing you throw asserts at)</li><li>A *Context* also has 1 or many *Vows* (which are functions that assert stuff on the topic)</li></ul></section><section class="slide"><h1>kthxbai!</h1></section>
 <p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script>/*
 $.deck.defaults.keys = {
   next: [],
