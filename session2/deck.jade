@@ -1,16 +1,35 @@
-
-.slide
+section.slide
     h1 Zappa on cloud9 (via node.js)
-    
-.slide
-    h2 zappa!
-    
+section.slide
+    h2 zappa is...
     ul
-        li.slide Like this one
-        li.slide And this one
-    
-.slide
-    h2 Some Example Code
-    
-    textarea.code(mode='javascript',runnable='true')
-        console.log('hello');
+      li.slide a node.js module...
+      li.slide using express.js (the best webserver framework for node.js)...
+      li.slide and socket.io (the best websocket and comet-style client push framework)...
+      li.slide as coffescript (the best language that compiles into javascript)...
+      li.slide with a bunch of sinatra-style sugar...
+section.slide
+  h2 that looks like this...
+  textarea.code(mode='javascript',runnable='false')
+    require 'zappa' ->
+      requiring 'util', 'database', 'http'
+      enable 'serve jquery', 'serve sammy', 'serve zappa'
+      use 'static'
+
+      get '/cars/:car' : ->
+        database.get @car =>
+          render userPage
+      
+      userPage = 
+        something
+
+section.slide
+  h2 cloud9 is...
+  ul
+    li.slide a cloud-based node.js ide...
+    li.slide integrated with github, bitbucket, and heroku...
+    li.slide where you can test and debug your apps...
+section.slide
+  h2 that looks like...
+  a(href='http://cloud9ide.com') this
+

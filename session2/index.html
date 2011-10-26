@@ -1,5 +1,19 @@
-<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><div class="slide"><h1>Zappa on cloud9 (via node.js)</h1></div><div class="slide"><h2>zappa!</h2><ul><li class="slide">Like this one</li><li class="slide">And this one</li></ul></div><div class="slide"><h2>Some Example Code</h2><textarea mode="javascript" runnable="true" class="code">console.log('hello');
-</textarea></div>
+<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Zappa on cloud9 (via node.js)</h1></section><section class="slide"><h2>zappa is...</h2><ul><li class="slide">a node.js module...</li><li class="slide">using express.js (the best webserver framework for node.js)...</li><li class="slide">and socket.io (the best websocket and comet-style client push framework)...</li><li class="slide">as coffescript (the best language that compiles into javascript)...</li><li class="slide">with a bunch of sinatra-style sugar...</li></ul></section><section class="slide"><h2>that looks like this...</h2><textarea mode="javascript" runnable="false" class="code">require 'zappa' ->
+  requiring 'util', 'database', 'http'
+  enable 'serve jquery', 'serve sammy', 'serve zappa'
+  use 'static'
+
+  get '/cars/:car' : ->
+    database.get @car =>
+      render userPage
+
+
+  userPage = 
+    something
+
+
+
+</textarea></section><section class="slide"><h2>cloud9 is...</h2><ul><li class="slide">a cloud-based node.js ide...</li><li class="slide">integrated with github, bitbucket, and heroku...</li><li class="slide">where you can test and debug your apps...</li></ul></section><section class="slide"><h2>that looks like...</h2><a href="http://cloud9ide.com">this</a></section>
 <p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script>/*
 $.deck.defaults.keys = {
   next: [],
