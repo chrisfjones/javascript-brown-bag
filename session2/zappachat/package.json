@@ -1,0 +1,6 @@
+{
+  "name": "zappa",
+  "dependencies": {
+    "zappa" : "stable"
+  }
+}
