@@ -1,19 +1,93 @@
-<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Zappa on cloud9 (via node.js)</h1></section><section class="slide"><h2>zappa is...</h2><ul><li class="slide">a node.js module...</li><li class="slide">using express.js (the best webserver framework for node.js)...</li><li class="slide">and socket.io (the best websocket and comet-style client push framework)...</li><li class="slide">as coffescript (the best language that compiles into javascript)...</li><li class="slide">with a bunch of sinatra-style sugar...</li></ul></section><section class="slide"><h2>that looks like this...</h2><textarea mode="javascript" runnable="false" class="code">require 'zappa' ->
-  requiring 'util', 'database', 'http'
-  enable 'serve jquery', 'serve sammy', 'serve zappa'
-  use 'static'
+<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Zappa on cloud9 (via node.js)</h1></section><section class="slide"><h2>zappa is...</h2><ul><li class="slide">a node.js module...</li><li class="slide">using express.js (the best webserver framework for node.js)...</li><li class="slide">and socket.io (the best websocket and comet-style client push framework)...</li><li class="slide">as coffescript dsl (the best language that compiles into javascript)...</li><li class="slide">with a bunch of sinatra-style sugar...</li></ul></section><section class="slide"><h2>that looks like this...</h2><textarea mode="javascript" runnable="false" class="code">require 'zappa' ->
+  requiring 'database'
+  @use 'static', 'default layout'
 
-  get '/cars/:car' : ->
+  @get '/cars/:car' : ->
     database.get @car =>
       render userPage
 
 
-  userPage = 
-    something
+  @view userPage:
+    h1 'hello'
 
 
 
-</textarea></section><section class="slide"><h2>cloud9 is...</h2><ul><li class="slide">a cloud-based node.js ide...</li><li class="slide">integrated with github, bitbucket, and heroku...</li><li class="slide">where you can test and debug your apps...</li></ul></section><section class="slide"><h2>that looks like...</h2><a href="http://cloud9ide.com">this</a></section>
+</textarea></section><section class="slide"><h2>cloud9 is...</h2><ul><li class="slide">a cloud-based node.js ide...</li><li class="slide">integrated with github, bitbucket, and heroku...</li><li class="slide">where you can test and debug your apps...</li><li class="slide">on c9.io or locally...</li></ul></section><section class="slide"><h2>that looks like...</h2><a href="http://localhost:3000" target="new">this</a></section><section class="slide"><h2>zappa for rest</h2><textarea mode="javascript" runnable="false" class="code">@get    '*'          : 'blah'
+@post   '/thing'     : -> doStuff()
+@put    '/thing/:id' : -> doStuff(@params.id)
+@delete '/a', '/b'   : -> deleteStuff()
+
+@get    'index.html' : ```
+    <!DOCTYPE html>
+    <html>
+      <head><title>title</title></head>
+      <body>raw response</body>
+    </html>
+```
+
+@get    '/thing/:id' : ->
+  ThingModel.findById @params.id, (err, thing) =>
+    @send thing
+
+
+
+</textarea></section><section class="slide"><h2>zappa for views and layouts</h2><textarea mode="javascript" runnable="false" class="code">@get '/' : @render myView: { param: 'monkeys' }
+@view myView:
+  @scripts     = ['/zappa/jquery', '/zappa/zappa']
+  @title       = 'myView'
+  @stylesheets = ['myStyle']
+
+@view layout:
+  doctype 5
+  html ->
+    head ->
+      title @title if @title
+      if @scripts
+        for s in @scripts
+          script src: s + '.js'
+
+      script(src: @script + '.js') if @script
+      if @stylesheets
+        for s in @stylesheets
+          link rel: 'stylesheet', href: s + '.css'
+
+      link(rel: 'stylesheet', href: @stylesheet + '.css') if @stylesheet
+      style @style if @style
+    body @body
+
+
+
+</textarea></section><section class="slide"><h2>zappa for socket.io</h2><textarea mode="javascript" runnable="false" class="code">@on connection: ->
+  @emit 'welcome'
+
+@on message: ->
+  @broadcast @data.text
+  @emit "i said #{@data.text} to everyone else :P"
+
+
+</textarea></section><section class="slide"><h2>zappa for client stuff and shared stuff</h2><textarea mode="javascript" runnable="false" class="code">@view myView:
+  @scripts = ['/zappa/jquery', 'main']
+  @body = button 'Send'
+
+@client '/main.js': ->
+  $ =>
+    $('button').click (e) =>
+      alert "hey! #{sum 1, 2}"
+
+
+
+@shared '/shared.js': ->
+  root = window ? global
+  root.sum = (x, y) ->
+    String Number x + Number y
+
+
+@get '/sum/:x/:y' : ->
+  sum @params.x, @params.y
+
+
+
+</textarea></section><section class="slide"><h1>lets write a chat app</h1></section>
 <p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script>/*
 $.deck.defaults.keys = {
   next: [],
