@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Javascript Brown Bag Session 1</h1></section><section class="slide"><h2>A brief history of javascript:</h2><ul><li class="slide">The old days:<img src="Netscape1.jpg"/></li><li class="slide">And fun syntax:<textarea mode="javascript" runnable="true" class="code">(function(child, parent) {
+<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><!-- link(rel='stylesheet', href='#{clientpath}stage.css')--><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Javascript Brown Bag Session 1</h1></section><section class="slide"><h2>A brief history of javascript:</h2><ul><li class="slide">The old days:<img src="Netscape1.jpg"/></li><li class="slide">And fun syntax:<textarea mode="javascript" runnable="true" class="code">(function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
   ctor.prototype = parent.prototype; child.prototype = new ctor; 
@@ -136,14 +136,4 @@ suite.addBatch
 
 suite.run()
 </textarea><ul class="slide">A quick vows primer<li>Vows is an asynchronous bdd test framework for node</li><li>You start with a *Suite*</li><li>Add *Batches* to it (which execute in parallel)</li><li>A *Batch* has 1 or many *Contexts*</li><li>A *Context* probably has a *Topic* (which is thing you throw asserts at)</li><li>A *Context* also has 1 or many *Vows* (which are functions that assert stuff on the topic)</li></ul></section><section class="slide"><h1>kthxbai!</h1></section>
-<p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script>/*
-$.deck.defaults.keys = {
-  next: [],
-  previous: []
-};
-*/
-
-$(function() {
-    $.deck('.slide');
-});
-</script></body></html>
+<p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script src="../bridge-deckjs.js"></script></body></html>

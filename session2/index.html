@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Zappa on cloud9 (via node.js)</h1></section><section class="slide"><h2>zappa is...</h2><ul><li class="slide">a node.js module...</li><li class="slide">using express.js (the best webserver framework for node.js)...</li><li class="slide">and socket.io (the best websocket and comet-style client push framework)...</li><li class="slide">as coffescript dsl (the best language that compiles into javascript)...</li><li class="slide">with a bunch of sinatra-style sugar...</li></ul></section><section class="slide"><h2>that looks like this...</h2><textarea mode="javascript" runnable="false" class="code">require 'zappa' ->
+<!DOCTYPE html><html><head><title>Javascript Brown Bag Series</title><link rel="stylesheet" href="../deckem.css"><!-- link(rel='stylesheet', href='#{clientpath}stage.css')--><link rel="stylesheet" href="../themes/default.css"><link rel="stylesheet" href="../custom.css"></head><body><div class="sp-screen"><div class="sp-pane deck-container"><section class="slide"><h1>Zappa on cloud9 (via node.js)</h1></section><section class="slide"><h2>zappa is...</h2><ul><li class="slide">a node.js module...</li><li class="slide">using express.js (the best webserver framework for node.js)...</li><li class="slide">and socket.io (the best websocket and comet-style client push framework)...</li><li class="slide">as coffescript dsl (the best language that compiles into javascript)...</li><li class="slide">with a bunch of sinatra-style sugar...</li></ul></section><section class="slide"><h2>that looks like this...</h2><textarea mode="javascript" runnable="false" class="code">require 'zappa' ->
   requiring 'database'
   @use 'static', 'default layout'
 
@@ -88,14 +88,4 @@
 
 
 </textarea></section><section class="slide"><h1>lets write a chat app</h1></section>
-<p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script>/*
-$.deck.defaults.keys = {
-  next: [],
-  previous: []
-};
-*/
-
-$(function() {
-    $.deck('.slide');
-});
-</script></body></html>
+<p class="deck-status"><span class="deck-status-current"></span><span>/</span><span class="deck-status-total"></span></p></div></div><div class="sp-stage"><div class="sp-floor"></div></div><div class="sp-audience"></div><script src="../deckem.js"></script><script src="../bridge-deckjs.js"></script></body></html>
